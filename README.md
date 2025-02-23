@@ -1,10 +1,12 @@
 # Microflow-IOP
 ## TLDR
-MicroFlow-IOP is a computer vision-based algorithm designed to analyze intraocular pressure (IOP) by tracking liquid displacement within a microfluidic chamber. Utilizing optical flow techniques, particularly the Lucas-Kanade method, the algorithm accurately follows the movement of the liquid surface as it responds to pressure changes. By integrating real-time tracking, noise reduction, and robust feature selection, MicroFlow-IOP ensures precise measurement of fluid displacement, which is then mapped to IOP values using a calibrated model.
+MicroFlow-IOP is a computer vision-based algorithm designed to analyze intraocular pressure (IOP) by tracking liquid displacement within a microfluidic chamber. By integrating real-time tracking, noise reduction, and robust feature selection, MicroFlow-IOP ensures precise measurement of fluid displacement, which is then mapped to IOP values using a calibrated model.
 
 ![displacement_demo](displacement_demo.png)
 
-This system enhances the reliability of non-invasive IOP monitoring by addressing challenges such as occlusions, reflections, and color-based interference in microfluidic systems. With potential applications in ophthalmology and biomedical research, MicroFlow-IOP represents a step toward more accessible and automated eye health diagnostics.
+With potential applications in ophthalmology and biomedical research, MicroFlow-IOP represents a step toward more accessible and automated eye health diagnostics.
+
+The performance demo can be accessed here [YouTube](https://youtu.be/HHLs4mzJsgc).
 
 ## Deployment
 Change to directory of your project. Create virtual environment and load the dependencies according to `IOP_requirements.txt`.
@@ -22,6 +24,8 @@ python data_acquisition.py
 python data_acquisition_red_region.py
 ```
 
+`data_acquisition_red_region.py` is the script for converting the frame data into red-enhanced versions. The script has two options (modify the function argument according to need): turning background into grayscale (`effect == "enhance"`) and completely removing background (`effect == "crop"`).
+
 ### Vision-based Model Training & Finetuning
 `train_val_split.py` contains the script to create data directory splitted into training and validation folders. `training.py` contains the script to train the vision-based model for pressure prediction.
 ```
@@ -34,5 +38,3 @@ Run the main.py file in the repository
 ```
 python main.py
 ```
-
-## Performance Overview
