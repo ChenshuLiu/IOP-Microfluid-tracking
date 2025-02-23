@@ -39,3 +39,6 @@ Run the main.py file in the repository
 ```
 python main.py
 ```
+
+## Technical Detail Breakdown
+![](Technical_Breakdown.png)
