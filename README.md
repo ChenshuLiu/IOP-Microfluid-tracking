@@ -6,31 +6,33 @@ MicroFlow-IOP is a computer vision-based algorithm designed to analyze intraocul
 
 This system enhances the reliability of non-invasive IOP monitoring by addressing challenges such as occlusions, reflections, and color-based interference in microfluidic systems. With potential applications in ophthalmology and biomedical research, MicroFlow-IOP represents a step toward more accessible and automated eye health diagnostics.
 
-## Technical Details
-### Modeling IOP and distance
-Based on experimental data (please refer to `distance_pressure.xlsx`), the pearson correlation coefficient is around 0.99, which is confident to say there is a linear relationship between distance and IOP.
-
-### Liquid surface tracking
-Due to the relative small cross section of the microfluidic chamber and goal of using accessible consumer-grade accessories (e.g. webcam, phone camera) which usually lack super-high resolution, **Lucas Kanade** (LK) method is used. LK method is a optical flow tracking algorithm is based on the assumption of relative intensity constancy, and infer the location of point-of-interest based on intensity change in specified pixels. Technical theorem can refer to [Lucas-Kanade Optical Flow](https://www.cs.cmu.edu/~16385/s15/lectures/Lecture21.pdf).
-
-![](https://viso.ai/wp-content/uploads/2021/03/optical-flow-opencv.jpg)
-
-### Distance measurement
-The liquid travels in a curved path in the microfluidic chamber, and the linear model constructed to measure IOP from distance is based on the scalar distance that the liquid surface travels. The distance travelled is being calculated incrementally through euclidean distance of new point tracked by Lucas-Kanade method from the last point location.
-
-![](https://tutorial.math.lamar.edu/classes/calcii/ArcLength_Files/image001.gif)
-
-### Direction of liquid surface travel
-Because the distance is being determined incrementally, the direction of change matters. The liquid surface travelling direction is determined through dot product as: $$\mathbf{a} \cdot \mathbf{b} = |\mathbf{a}| |\mathbf{b}| \cos\theta$$ where when the point is moving in the positive directions the product is greater than zero, while negative directions cause the product to be smaller than zero.
-
 ## Deployment
-1. Change to directory of your project. Create virtual environment and load the dependencies according to `IOP_requirements.txt`.
+Change to directory of your project. Create virtual environment and load the dependencies according to `IOP_requirements.txt`.
 ```
 python -m venv [name of virtual environment]
 source [name of virtual environment]/bin/activate
 pip install -r ./IOP_requirements.txt
 ```
-2. Run the main.py file in the repository
+### Data Generation
+For replicating the data generation process or for finetuning with your own data, the `data_acquisition.py` script will save each frame of a given close-up device video. Replace the video file name in line 75. The frame-by-frame image data will be saved in a new folder titled "CNN_frame_data".
+
+For reference, data used for the study can be accessed in [this onedrive link](https://terasakilab-my.sharepoint.com/:u:/g/personal/chenshu_liu_terasakicolab_org/Ed7v7QXqAc9ImS0lvQyDK0sB7l9vpXrC9HK0l0pmLvnq5g?e=qoxzFd). Because liquid in the microfluidic chamber is red, we empirically found that enhancing the red color in the frame data would assist with the model performance. Specifically, extract the red chamber region based on HSV values and making the background in grayscale. For reference, the red-enhanced images can be accessed in [this onedrive link](https://terasakilab-my.sharepoint.com/:u:/g/personal/chenshu_liu_terasakicolab_org/EQg4IOc52CdPjbm7wjNNgcgBC22RMALdavSQ2uHjrC650A?e=w5i74c)
+```
+python data_acquisition.py
+python data_acquisition_red_region.py
+```
+
+### Vision-based Model Training & Finetuning
+`train_val_split.py` contains the script to create data directory splitted into training and validation folders. `training.py` contains the script to train the vision-based model for pressure prediction.
+```
+python train_val_split.py
+python training.py
+```
+
+### Pressure Inference
+Run the main.py file in the repository
 ```
 python main.py
 ```
+
+## Performance Overview
