@@ -14,6 +14,7 @@ Change to directory of your project. Create virtual environment and load the dep
 python -m venv [name of virtual environment]
 source [name of virtual environment]/bin/activate
 pip install -r ./IOP_requirements.txt
+cd CNN_based_model/
 ```
 ### Data Generation
 For replicating the data generation process or for finetuning with your own data, the `data_acquisition.py` script will save each frame of a given close-up device video. Replace the video file name in line 75. The frame-by-frame image data will be saved in a new folder titled "CNN_frame_data".
