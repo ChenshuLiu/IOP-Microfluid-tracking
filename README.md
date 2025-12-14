@@ -1,6 +1,7 @@
 # Microflow-IOP
+
 ## TLDR
-MicroFlow-IOP is a computer vision-based algorithm designed to analyze intraocular pressure (IOP) by tracking liquid displacement within a microfluidic chamber. By integrating real-time tracking, noise reduction, and robust feature selection, MicroFlow-IOP ensures precise measurement of fluid displacement, which is then mapped to IOP values using a calibrated model.
+MicroFlow-IOP is a computer vision-based algorithm designed to analyze intraocular pressure (IOP) by tracking liquid displacement within a microfluidic chamber. By integrating real-time tracking, noise reduction, and robust feature selection, MicroFlow-IOP ensures precise measurement of fluid displacement, which is then mapped to IOP values using a calibrated model. The repository contains camera-ready code for the paper "All-Polymer Theranostic Smart Contact Lens for Monitoring and Programmable Self-Administration of Intraocular Pressure" [![DOI](https://zenodo.org/badge/926165763.svg)](https://doi.org/10.5281/zenodo.17926949)
 
 ![displacement_demo](displacement_demo.png)
 
